@@ -1,4 +1,4 @@
-require './lib/bus'
+require_relative './../bus'
 
 module IoRegister
 

@@ -1,7 +1,7 @@
 
-require './lib/cpu/addressing'
-require './lib/cpu/operations'
-require './lib/bus'
+require_relative './addressing'
+require_relative './operations'
+require_relative './../bus'
 
 class Registers
   attr_accessor :a, :x, :y, :pc, :sp, :p
@@ -91,7 +91,7 @@ class Cpu
   def initialize(bus)
     @bus = bus
     @registers = Registers.new
-    @operations = Operations.new
+    @operations = Operations.new(self, bus)
   end
 
   def tick

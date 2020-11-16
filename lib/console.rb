@@ -1,9 +1,9 @@
-require  './lib/screen'
-require  './lib/bus'
-require  './lib/ppu'
-require  './lib/cartridge'
-require './lib/cpu/cpu'
-require './lib/io/io'
+require_relative './screen'
+require_relative './bus'
+require_relative './ppu'
+require_relative './cartridge'
+require_relative './cpu/cpu'
+require_relative './io/io'
 
 class Console
 
@@ -34,7 +34,7 @@ class Console
 end
 
 console = Console.new
-console.load("./roms/Tetris DX (World) (SGB Enhanced).gbc")
+console.load("../roms/Tetris DX (World) (SGB Enhanced).gbc")
 console.tick
 
 main = lambda {

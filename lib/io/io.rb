@@ -1,4 +1,4 @@
-require './lib/io/tia'
+require_relative './tia'
 
 class Io
 
