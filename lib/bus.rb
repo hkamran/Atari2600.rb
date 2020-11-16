@@ -1,16 +1,29 @@
 class Bus
 
-  attr_accessor :cartridge, :ppu, :wram, :io, :cpu, :tia, :pia, :stack
+  attr_accessor :cartridge, :wram, :io, :cpu, :tia, :pia, :stack
 
   def initialize
     @stack = []
+    @wram = []
   end
 
   def read_byte(addr)
+    if addr == nil
+      throw "Invalid read given at #{addr}"
+    end
+
+    addr = addr % 0x2000
+
     if 0x0000 <= addr && addr <= 0x002C
-      return @cartridge.read_byte(addr)
+      @tia.read_byte(addr - 0x0000)
     elsif 0x0030 <= addr && addr <= 0x003D
-      return @cartridge.read_byte(addr)
+      @tia.read_byte(addr - 0x0030)
+    elsif 0x0080 <= addr && addr <= 0x00FF
+      @wram[addr 0x0080]
+    elsif 0x0280 <= addr && addr <= 0x0297
+      @io.read_byte(addr - 0x0280)
+    elsif 0x1000 <= addr && addr <= 0x1FFF
+      @cartridge.read_byte(addr - 0x1000)
     end
   end
 
@@ -22,7 +35,22 @@ class Bus
   end
 
   def write_byte(addr, value)
+    if addr == nil || value == nil || value < 0 || value > 0xFF
+      throw "Invalid write given at #{addr} with #{value}"
+    end
+    addr = addr % 0x2000
 
+    if 0x0000 <= addr && addr <= 0x002C
+      @tia.write_byte(addr - 0x0000, value)
+    elsif 0x0030 <= addr && addr <= 0x003D
+      @tia.write_byte(addr - 0x0030, value)
+    elsif 0x0080 <= addr && addr <= 0x00FF
+      @wram[addr 0x0080] = value
+    elsif 0x0280 <= addr && addr <= 0x0297
+      @io.write_byte(addr - 0x0280, value)
+    elsif 0x1000 <= addr && addr <= 0x1FFF
+      @cartridge.write_byte(addr - 0x1000, value)
+    end
   end
 
   def push_byte(value)
@@ -38,10 +66,6 @@ class Bus
     high = stack.pop
 
     low | (high << 87)
-  end
-
-  def get_memory()
-    @memory
   end
 
 end

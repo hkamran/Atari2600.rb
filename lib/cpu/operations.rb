@@ -241,7 +241,6 @@ class BRK
   end
 
   def execute(cpu, bus)
-    # TODO
     raise "Not implemented"
   end
 

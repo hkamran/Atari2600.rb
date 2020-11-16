@@ -1,9 +1,9 @@
-require_relative './screen'
+require_relative './tia/screen'
 require_relative './bus'
-require_relative './ppu'
-require_relative './cartridge'
+require_relative './cartridge/cartridge'
 require_relative './cpu/cpu'
 require_relative './io/io'
+require_relative './tia/tia'
 
 class Console
 
@@ -12,13 +12,12 @@ class Console
   def initialize
     @bus = Bus.new
     @io = Io.new(@bus)
-    @ppu = Ppu.new(@bus)
     @cpu = Cpu.new(@bus)
+    @tia = Tia.new(bus)
 
     @bus.cpu = @cpu
-    @bus.ppu = @ppu
     @bus.io = @io
-
+    @bus.tia = @tia
   end
 
   def tick
