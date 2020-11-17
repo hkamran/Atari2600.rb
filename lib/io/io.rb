@@ -6,7 +6,6 @@ class Io
 
   def initialize(bus)
     @bus = bus
-    @tia = Tia.new(bus)
   end
 
 end
