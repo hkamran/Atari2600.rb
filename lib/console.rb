@@ -14,6 +14,7 @@ class Console
     @io = Io.new(@bus)
     @cpu = Cpu.new(@bus)
     @tia = Tia.new(bus)
+    @cartridge = Cartridge.new
 
     @bus.cpu = @cpu
     @bus.io = @io
@@ -25,8 +26,7 @@ class Console
   end
 
   def load(path)
-    @cartridge = Cartridge.new(path)
-    @bus.cartridge = @cartridge
+    @cartridge.load(path)
     puts cartridge.to_s
   end
 

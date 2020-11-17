@@ -1,4 +1,3 @@
-require_relative './tia'
 
 class Io
 

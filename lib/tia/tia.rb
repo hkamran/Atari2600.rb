@@ -110,7 +110,8 @@ class Tia
 
   def write_byte(addr, value)
     register = @registers[addr]
-    return if register == nil
+    return if register.nil?
+
     register.value = value
   end
 
