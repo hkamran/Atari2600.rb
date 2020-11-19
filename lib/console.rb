@@ -7,7 +7,7 @@ require_relative './tia/tia'
 
 class Console
 
-  attr_accessor :bus, :io, :ppu, :cpu, :cartridge
+  attr_accessor :bus, :io, :ppu, :cpu, :cartridge, :screen
 
   def initialize
     @bus = Bus.new
@@ -19,6 +19,10 @@ class Console
     @bus.cpu = @cpu
     @bus.io = @io
     @bus.tia = @tia
+
+    @screen = Screen.new(&lambda {
+      @screen.set_pixel(0, 0, 10)
+    })
   end
 
   def tick
@@ -27,17 +31,18 @@ class Console
 
   def load(path)
     @cartridge.load(path)
-    puts cartridge.to_s
+    puts "Cartridge loaded '#{path}'"
+  end
+
+  def run()
+    @screen.show
   end
 
 end
 
 console = Console.new
 console.load("../roms/Tetris DX (World) (SGB Enhanced).gbc")
-console.tick
+console.run
 
-main = lambda {
-}
 
-Screen.new(&main)
 

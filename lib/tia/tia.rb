@@ -18,25 +18,9 @@ module ScreenRegions
 
   VOVER_START = 233
   VOVER_END = 262
-end
 
-class Frame
-
-  def initialize
-    @values = {}
-
-    for i in 0..VOVER_END
-      @values[i] = {}
-      for j in 0..HRENDER_END
-        @values[i][j] = 0
-      end
-    end
-  end
-
-  def set(x, y, value)
-    @values[y][x] = value
-  end
-
+  HEIGHT = 262
+  WIDTH = 228
 end
 
 class Tia
@@ -51,7 +35,6 @@ class Tia
     @is_vblank = false
     @is_vsync = false
     @is_vover = false
-    @frame = Frame.new
 
     @registers = TiaRegisters.new(bus)
   end
